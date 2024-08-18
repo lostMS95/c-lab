@@ -1,8 +1,8 @@
 # 나의 스프링부트 프로젝트 학습 여정
 
-![Java](https://img.shields.io/badge/java-17-blue) ![Spring Boot](https://img.shields.io/badge/spring--boot-3.3.2-green) ![JPA](https://img.shields.io/badge/jpa-hibernate-orange) ![PostgreSQL](https://img.shields.io/badge/postgresql-blue) ![AWS](https://img.shields.io/badge/aws-cloud-yellow) ![SVN](https://img.shields.io/badge/svn-version%20control-lightgrey) ![Jenkins](https://img.shields.io/badge/jenkins-CI%2FCD-red) ![NGINX](https://img.shields.io/badge/nginx-web%20server-brightgreen) ![React](https://img.shields.io/badge/react-js-blue) ![JUnit](https://img.shields.io/badge/junit-TDD-blue) ![Lombok](https://img.shields.io/badge/lombok-annotation-orange)
+![Java](https://img.shields.io/badge/java-17-blue) ![Spring Boot](https://img.shields.io/badge/spring--boot-3.3.2-green) ![JPA](https://img.shields.io/badge/jpa-hibernate-orange) ![PostgreSQL](https://img.shields.io/badge/postgresql-blue) ![AWS](https://img.shields.io/badge/aws-cloud-yellow) ![Jenkins](https://img.shields.io/badge/jenkins-CI%2FCD-red) ![NGINX](https://img.shields.io/badge/nginx-web%20server-brightgreen) ![React](https://img.shields.io/badge/react-js-blue)
 
-이 프로젝트는 다양한 최신 기술들을 학습하고 적용하기 위한 개인 학습 공간입니다. 모던 웹 개발 및 DevOps 도구를 활용하여 완전한 웹 애플리케이션을 구축하는 것을 목표로 하고 있습니다.
+이 프로젝트는 다양한 최신 기술들을 학습하고 적용하기 위한 개인 학습 공간입니다.
 
 ## 목차
 
@@ -45,8 +45,7 @@
 - **클라우드 호스팅**: AWS 클라우드를 활용한 애플리케이션 배포 및 스케일링
 - **데이터베이스 관리**: JPA와 PostgreSQL을 활용한 데이터 영속성 관리
 - **모던 프론트엔드**: JSP에서 React.js로의 마이그레이션 계획
-- **버전 관리**: SVN 및 Git을 통한 소스 코드 버전 관리
-- **커스터마이즈 가능한 SVN 폴더 관리**: 관리자 인터페이스를 통해 SVN 폴더 이름 설정 가능
+- **버전 관리**: Git을 통한 소스 코드 버전 관리
 
 ## 학습 목표
 
@@ -68,20 +67,19 @@
 4. **CI/CD 구현**: 젠킨스를 활용한 지속적 통합 및 배포 파이프라인 설정
 5. **AWS 배포**: AWS를 통해 애플리케이션 호스팅 및 클라우드 인프라 설정
 6. **NGINX 구성**: NGINX와 SSL을 통한 웹 트래픽 보안 강화
-7. **버전 관리**: SVN에서 Git으로의 전환을 통한 협업 강화
+7. **버전 관리**: Git을 통한 협업 강화
 
 ## 설치 및 실행
 
 ### 필수 요구 사항
 
-- Java 11 이상
+- Java 17
 - PostgreSQL 설치 및 구성
 - AWS 계정
-- SVN 또는 Git 설치
+- Git 설치
 - NGINX 설치
 
 ### 리포지토리 클론
 
 ```bash
-git clone https://github.com/yourusername/your-repository.git
-cd your-repository
+git clone https://github.com/lostMS95/c-lab.git
