@@ -18,7 +18,11 @@ import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.net.URLEncoder;
 
 @Service
 public class FileUploadService {
@@ -63,15 +67,16 @@ public class FileUploadService {
             throw new IOException("업로드할 파일이 선택되지 않았습니다.");
         }
 
-        String uploadDirectory = System.getProperty("user.dir") + "/uploads";
-        File dir = new File(uploadDirectory);
-        if (!dir.exists()) {
-            dir.mkdirs();
+        String uploadDirectory = System.getProperty("user.dir") + File.separator + "uploads";
+        Path dirPath = Paths.get(uploadDirectory);
+
+        if (Files.notExists(dirPath)) {
+            Files.createDirectories(dirPath);
         }
 
-        String filePath = uploadDirectory + "/" + file.getOriginalFilename();
-        File dest = new File(filePath);
-        file.transferTo(dest);
+        String filePath = uploadDirectory + File.separator + file.getOriginalFilename();
+        Path destination = Paths.get(filePath);
+        file.transferTo(destination.toFile());
 
         return filePath;
     }
@@ -84,7 +89,7 @@ public class FileUploadService {
         return commitClient.doImport(file, SVNURL.parseURIEncoded(svnUrl), commitMessage, null, true, true, SVNDepth.INFINITY);
     }
 
-    public String generateSVNUrl(String fileName) {
+    public String generateSVNUrl(String fileName) throws Exception {
         // 현재 날짜 가져오기
         LocalDate currentDate = LocalDate.now();
 
