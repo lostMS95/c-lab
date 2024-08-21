@@ -2,7 +2,6 @@ package com.ms.clab.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,10 +21,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())   //스프링 시큐리티는 CSRF 자동체크를 하므로 일단 disable 처리
+                .csrf(csrf -> csrf.disable())   //CSRF(Cross-Site Request Forgery) 보호 비활성화
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login/**", "/perform_login/**", "/resources/**", "/css/**", "/js/**").permitAll()
-                        .anyRequest().permitAll()   // 그 외의 모든 요청은 인증 필요 -> TODO : 확인필요
+                        .requestMatchers("/", "/home").authenticated()
+                        .requestMatchers("/login", "/perform_login", "/resources/**", "/css/**", "/js/**").permitAll()
+                        .anyRequest().permitAll()   // 그 외의 모든 요청은 인증 필
+                        //TODO : 디렉토리로 지정 필요해보임.
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -45,9 +46,5 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
     }
 }

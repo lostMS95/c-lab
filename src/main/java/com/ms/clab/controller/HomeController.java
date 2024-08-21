@@ -21,7 +21,7 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String showHomePage() {
+    public String home() {
         return "home";
     }
 
@@ -37,10 +37,10 @@ public class HomeController {
             File dest = new File(filePath);
             SVNCommitInfo commitInfo = fileUploadService.uploadToSVN(dest);
 
-            modelAndView.addObject("message", "File uploaded successfully to SVN: " + file.getOriginalFilename());
+            modelAndView.addObject("message", "파일이 SVN에 성공적으로 업로드되었습니다: " + file.getOriginalFilename());
             modelAndView.addObject("commitInfo", commitInfo);
         } catch (Exception e) {
-            modelAndView.addObject("message", "File upload failed: " + e.getMessage());
+            modelAndView.addObject("message", "파일 업로드 실패: " + e.getMessage());
         }
 
         return modelAndView;

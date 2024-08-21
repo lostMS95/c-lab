@@ -15,7 +15,7 @@
             font-family: 'Roboto', sans-serif;
             background-color: #f4f4f9;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,21 +24,23 @@
 
         .login-container {
             background-color: #ffffff;
-            padding: 40px;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            max-width: 100%;
             width: 100%;
+            box-sizing: border-box;
         }
 
         .login-container h1 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             color: #333333;
+            font-size: 24px;
         }
 
         .login-container .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .login-container .input-group label {
@@ -46,6 +48,7 @@
             font-weight: bold;
             margin-bottom: 5px;
             color: #666666;
+            font-size: 14px;
         }
 
         .login-container .input-group input {
@@ -53,7 +56,7 @@
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #cccccc;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .login-container .input-group input:focus {
@@ -66,10 +69,10 @@
             width: 100%;
             background-color: #6c63ff;
             color: #ffffff;
-            padding: 15px;
+            padding: 12px;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
@@ -81,6 +84,7 @@
         .login-container .footer {
             text-align: center;
             margin-top: 20px;
+            font-size: 14px;
         }
 
         .login-container .footer a {
@@ -95,12 +99,12 @@
         .login-container .social-login {
             display: flex;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .login-container .social-login a {
             margin: 0 10px;
-            font-size: 24px;
+            font-size: 20px;
             color: #666666;
             transition: color 0.3s ease;
         }
@@ -111,8 +115,44 @@
 
         .error-message {
             color: #ff4d4d;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
+            font-size: 14px;
+        }
+
+        @media (min-width: 600px) {
+            .login-container {
+                max-width: 400px;
+            }
+
+            .login-container h1 {
+                font-size: 28px;
+            }
+
+            .login-container .input-group label {
+                font-size: 16px;
+            }
+
+            .login-container .input-group input {
+                font-size: 16px;
+            }
+
+            .login-container .btn {
+                font-size: 16px;
+                padding: 15px;
+            }
+
+            .login-container .footer {
+                font-size: 16px;
+            }
+
+            .login-container .social-login a {
+                font-size: 24px;
+            }
+
+            .error-message {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -121,7 +161,7 @@
     <h1>C-LAB</h1>
 
     <c:if test="${not empty error}">
-        <p class="error-message">${error}</p>
+    <p class="error-message">${error}</p>
     </c:if>
 
     <form action="/perform_login" method="post">
@@ -137,8 +177,8 @@
     </form>
 
     <div class="footer">
-        <p>Forgot your password? <a href="#">Reset it here</a></p>
-        <p>Don't have an account? <a href="#">Sign up now</a></p>
+        <p>비밀번호를 잊으셨나요? <a href="#">비밀번호 찾기</a></p>
+        <p>계정이 없으신가요? <a href="#">회원가입</a></p>
     </div>
 
     <div class="social-login">
