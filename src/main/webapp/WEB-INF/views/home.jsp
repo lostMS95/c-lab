@@ -20,43 +20,49 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
 
         .upload-container {
             background-color: #ffffff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            margin: 20px;
+            text-align: center;
         }
 
         .upload-container h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333333;
+            color: #007bff;
             font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
 
         .upload-container .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .upload-container .form-group label {
             font-weight: bold;
             color: #495057;
+            font-size: 14px;
+            text-align: left;
+            display: block;
+            margin-bottom: 8px;
         }
 
         .upload-container .form-control {
-            padding: 10px;
-            border-radius: 5px;
+            padding: 12px;
+            border-radius: 10px;
             border: 1px solid #ced4da;
             font-size: 16px;
         }
 
         .upload-container .form-control:focus {
-            border-color: #80bdff;
+            border-color: #007bff;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
             outline: none;
         }
@@ -64,9 +70,9 @@
         .upload-container .btn-primary {
             background-color: #007bff;
             border: none;
-            padding: 15px;
-            border-radius: 5px;
-            font-size: 16px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 18px;
             width: 100%;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -80,26 +86,71 @@
             margin-top: 20px;
             padding: 15px;
             font-size: 16px;
+            border-radius: 10px;
+        }
+
+        .upload-container .btn-secondary {
+            margin-top: 10px;
+            background-color: #6c757d;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-container .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .footer-text {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .footer-text a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 576px) {
+            .upload-container h1 {
+                font-size: 22px;
+            }
+
+            .upload-container .btn-primary,
+            .upload-container .btn-secondary {
+                font-size: 16px;
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
 <div class="upload-container">
-    <h1>Upload Your File</h1>
+    <h1>파일 업로드</h1>
     <form action="/upload" method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="file">Choose a file:</label>
+            <label for="file">파일 선택:</label>
             <input type="file" class="form-control" id="file" name="file" required>
         </div>
-        <button type="submit" class="btn btn-primary">Upload</button>
+        <button type="submit" class="btn btn-primary">업로드</button>
     </form>
 
-    <!-- 업로드 결과 메시지 표시 -->
     <c:if test="${not empty message}">
-        <div class="alert alert-info mt-3">
+        <div class="alert alert-info">
                 ${message}
         </div>
     </c:if>
+
+
 </div>
 
 <!-- Bootstrap JS (optional for Bootstrap features) -->
