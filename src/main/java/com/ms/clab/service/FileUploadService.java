@@ -15,6 +15,7 @@ import org.tmatesoft.svn.core.wc.SVNClientManager;
 import org.tmatesoft.svn.core.wc.SVNCommitClient;
 import org.tmatesoft.svn.core.SVNCommitInfo;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
+import com.ms.clab.util.AESUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,38 +23,40 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.net.URLEncoder;
 
 @Service
 public class FileUploadService {
 
     private final UserRepository userRepository;
-    private final SVNClientManager clientManager;
+    private final AESUtil aesUtil;
 
     @Autowired
-    public FileUploadService(UserRepository userRepository) {
+    public FileUploadService(UserRepository userRepository, AESUtil aesUtil) {
         this.userRepository = userRepository;
+        this.aesUtil = aesUtil;
+    }
 
-        // 현재 인증된 사용자 정보 가져오기
+    /**
+     * 현재 인증된 사용자의 정보를 기반으로 SVNClientManager를 생성합니다.
+     * @return SVNClientManager
+     */
+    /**
+     * 현재 인증된 사용자의 정보를 반환합니다.
+     * @return User 객체
+     */
+    private User getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = null;
-        String password = null;
+        if (authentication != null) {
+            String username = authentication.getPrincipal().toString();
 
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            username = userDetails.getUsername();
+            System.out.println("userDetails -> [username] ::: " + username);
 
             // JPA를 사용하여 데이터베이스에서 사용자 정보를 가져옴
-            User user = userRepository.findByUserId(username)
+            return userRepository.findByUserId(username)
                     .orElseThrow(() -> new UsernameNotFoundException("해당 아이디의 사용자를 찾을 수 없습니다"));
-
-            // 비밀번호는 데이터베이스에서 가져옴
-            password = user.getUserPw();
+        } else {
+            throw new UsernameNotFoundException("인증된 사용자 정보를 찾을 수 없습니다.");
         }
-
-        // SVNClientManager 초기화
-        this.clientManager = SVNClientManager.newInstance(SVNWCUtil.createDefaultOptions(true),
-                SVNWCUtil.createDefaultAuthenticationManager(username, password));
     }
 
     /**
@@ -81,9 +84,36 @@ public class FileUploadService {
         return filePath;
     }
 
+    /**
+     * 주어진 사용자의 정보를 기반으로 SVNClientManager를 생성합니다.
+     * @param user 현재 인증된 사용자
+     * @return SVNClientManager
+     */
+    private SVNClientManager createSVNClientManager(User user) {
+        // 비밀번호를 가져옴
+        String encryptedPassword  = user.getUserPw();
+
+        // 비밀번호 복호화
+        String decryptedPassword;
+        try {
+            decryptedPassword = AESUtil.decrypt(encryptedPassword );
+        } catch (Exception e) {
+            throw new RuntimeException("비밀번호 복호화에 실패했습니다.", e);
+        }
+
+        System.out.println("userDetails -> [password] ::: " + encryptedPassword + " >>> " + decryptedPassword);
+
+        // SVNClientManager 초기화
+        return SVNClientManager.newInstance(SVNWCUtil.createDefaultOptions(true),
+                SVNWCUtil.createDefaultAuthenticationManager(user.getUserId(), decryptedPassword));
+    }
+
     public SVNCommitInfo uploadToSVN(File file) throws Exception {
+        User authenticatedUser = getAuthenticatedUser();
+        SVNClientManager clientManager = createSVNClientManager(authenticatedUser);
+
         String svnUrl = generateSVNUrl(file.getName());
-        String commitMessage = "c-lab에 의해 commit됨. " + file.getName() + " [by gwpark]";
+        String commitMessage = "c-lab에 의해 commit됨. " + file.getName();
 
         SVNCommitClient commitClient = clientManager.getCommitClient();
         return commitClient.doImport(file, SVNURL.parseURIEncoded(svnUrl), commitMessage, null, true, true, SVNDepth.INFINITY);
