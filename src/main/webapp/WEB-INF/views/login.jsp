@@ -57,6 +57,7 @@
             border-radius: 5px;
             border: 1px solid #cccccc;
             font-size: 14px;
+            box-sizing: border-box; /* 이 줄을 추가하여 패딩을 포함한 전체 너비를 100%로 설정 */
         }
 
         .login-container .input-group input:focus {
