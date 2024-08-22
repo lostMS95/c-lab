@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,12 +132,44 @@
                 padding: 10px;
             }
         }
+        .user-info {
+            background-color: #f0f8ff; /* 밝은 파란색 배경 */
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #007bff; /* 파란색 텍스트 */
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+            display: inline-block;
+            text-align: left;
+            border-left: 4px solid #007bff; /* 왼쪽에 파란색 강조선 */
+        }
+
+        .user-info:before {
+            content: '🔒'; /* 아이콘 추가 */
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
 <div class="upload-container">
     <h1>파일 업로드</h1>
+
+    <!-- 로그인된 사용자 이름 표시 -->
+    <sec:authorize access="isAuthenticated()">
+        <p class="user-info">로그인된 사용자: ${pageContext.request.userPrincipal.name}</p>
+    </sec:authorize>
+
     <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">업로드할 파일명:</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="description">커밋메세지:</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+        </div>
         <div class="form-group">
             <label for="file">파일 선택:</label>
             <input type="file" class="form-control" id="file" name="file" required>
@@ -149,8 +182,6 @@
                 ${message}
         </div>
     </c:if>
-
-
 </div>
 
 <!-- Bootstrap JS (optional for Bootstrap features) -->

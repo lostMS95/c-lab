@@ -26,7 +26,9 @@ public class HomeController {
     }
 
     @PostMapping("/upload")
-    public ModelAndView handleFileUpload(@RequestParam("file") MultipartFile file) {
+    public ModelAndView handleFileUpload(@RequestParam("title") String title,
+                                         @RequestParam("description") String description,
+                                         @RequestParam("file") MultipartFile file) {
         ModelAndView modelAndView = new ModelAndView("home");
 
         try {
@@ -35,7 +37,7 @@ public class HomeController {
 
             // 2. SVN에 파일 업로드
             File dest = new File(filePath);
-            SVNCommitInfo commitInfo = fileUploadService.uploadToSVN(dest);
+            SVNCommitInfo commitInfo = fileUploadService.uploadToSVN(dest, title, description);
 
             modelAndView.addObject("message", "파일이 SVN에 성공적으로 업로드되었습니다: " + file.getOriginalFilename());
             modelAndView.addObject("commitInfo", commitInfo);

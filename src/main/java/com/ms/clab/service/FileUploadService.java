@@ -108,18 +108,32 @@ public class FileUploadService {
                 SVNWCUtil.createDefaultAuthenticationManager(user.getUserId(), decryptedPassword));
     }
 
-    public SVNCommitInfo uploadToSVN(File file) throws Exception {
+    public SVNCommitInfo uploadToSVN(File file, String title, String description) throws Exception {
         User authenticatedUser = getAuthenticatedUser();
         SVNClientManager clientManager = createSVNClientManager(authenticatedUser);
 
-        String svnUrl = generateSVNUrl(file.getName());
-        String commitMessage = "c-lab에 의해 commit됨. " + file.getName();
+        // 파일 확장자 추출
+        String fileName = file.getName();
+        String fileExtension = "";
+
+        int lastDotIndex = fileName.lastIndexOf(".");
+        if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
+            fileExtension = fileName.substring(lastDotIndex); // 확장자 포함
+        }
+
+        // title에 확장자 추가
+        title = title + fileExtension;
+
+        String svnUrl = generateSVNUrl(title);
+        String commitMessage = (description == null || description.isEmpty())
+                ? "c-lab에 의해 commit됨. " + title
+                : description;
 
         SVNCommitClient commitClient = clientManager.getCommitClient();
         return commitClient.doImport(file, SVNURL.parseURIEncoded(svnUrl), commitMessage, null, true, true, SVNDepth.INFINITY);
     }
 
-    public String generateSVNUrl(String fileName) throws Exception {
+    public String generateSVNUrl(String title) throws Exception {
         // 현재 날짜 가져오기
         LocalDate currentDate = LocalDate.now();
 
@@ -143,7 +157,7 @@ public class FileUploadService {
 
         // SVN 경로 생성
         String svnUrl = "http://222.122.47.196/svn/docs2/04. 지출내역/2. 개인경비사용내역/"
-                + year + "년/개인지출영수증/" + quarterFolder + "/" + fileName;
+                + year + "년/개인지출영수증/" + quarterFolder + "/" + title;
 
         return svnUrl;
     }
