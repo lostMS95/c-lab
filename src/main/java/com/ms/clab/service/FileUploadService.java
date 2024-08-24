@@ -49,8 +49,6 @@ public class FileUploadService {
         if (authentication != null) {
             String username = authentication.getPrincipal().toString();
 
-            System.out.println("userDetails -> [username] ::: " + username);
-
             // JPA를 사용하여 데이터베이스에서 사용자 정보를 가져옴
             return userRepository.findByUserId(username)
                     .orElseThrow(() -> new UsernameNotFoundException("해당 아이디의 사용자를 찾을 수 없습니다"));
@@ -100,8 +98,6 @@ public class FileUploadService {
         } catch (Exception e) {
             throw new RuntimeException("비밀번호 복호화에 실패했습니다.", e);
         }
-
-        System.out.println("userDetails -> [password] ::: " + encryptedPassword + " >>> " + decryptedPassword);
 
         // SVNClientManager 초기화
         return SVNClientManager.newInstance(SVNWCUtil.createDefaultOptions(true),
