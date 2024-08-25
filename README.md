@@ -77,7 +77,7 @@
 - PostgreSQL 설치 및 구성
 - AWS 계정
 - Git 설치
-- NGINX 설치 ㅋㅋ
+- NGINX 설치
 
 ### 리포지토리 클론
 

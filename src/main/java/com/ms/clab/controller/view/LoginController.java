@@ -1,4 +1,4 @@
-package com.ms.clab.controller;
+package com.ms.clab.controller.view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +21,6 @@ public class LoginController {
             model.addAttribute("message", "성공적으로 로그아웃되었습니다.");
         }
 
-        return "login";
+        return "auth/login";
     }
 }

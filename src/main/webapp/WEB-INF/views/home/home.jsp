@@ -133,21 +133,21 @@
             }
         }
         .user-info {
-            background-color: #f0f8ff; /* 밝은 파란색 배경 */
+            background-color: #f0f8ff;
             padding: 12px 20px;
             border-radius: 12px;
             margin-bottom: 20px;
             font-size: 18px;
-            color: #007bff; /* 파란색 텍스트 */
+            color: #007bff;
             font-weight: 500;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: inline-block;
             text-align: left;
-            border-left: 4px solid #007bff; /* 왼쪽에 파란색 강조선 */
+            border-left: 4px solid #007bff;
         }
 
         .user-info:before {
-            content: '🔒'; /* 아이콘 추가 */
+            content: '🔒';
             margin-right: 8px;
         }
     </style>
@@ -161,15 +161,69 @@
         <p class="user-info">로그인된 사용자: ${pageContext.request.userPrincipal.name}</p>
     </sec:authorize>
 
-    <form action="/upload" method="post" enctype="multipart/form-data">
+    <form action="/svn/upload" method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="title">업로드할 파일명:</label>
+            <label for="title">업로드 파일명:</label>
             <input type="text" class="form-control" id="title" name="title" required>
         </div>
         <div class="form-group">
             <label for="description">커밋메세지:</label>
-            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+            <textarea class="form-control" id="description" name="description" rows="2"></textarea>
         </div>
+
+        <!-- 첫 번째 셀렉트 박스 -->
+        <div class="form-group">
+            <label for="position">소속:</label>
+            <select class="form-control" id="position" name="position" required>
+                <option value="경영기획">경영기획</option>
+                <option value="사업기획">사업기획</option>
+                <option value="개발">개발</option>
+                <option value="회사공통">회사공통</option>
+                <option value="산업안전협회">산업안전협회</option>
+                <option value="경운대학교">경운대학교</option>
+                <option value="숭실대학교">숭실대학교</option>
+                <option value="밸류마크">밸류마크</option>
+                <option value="KMA">KMA</option>
+                <option value="선행기술">선행기술</option>
+                <option value="비즈비">비즈비</option>
+            </select>
+        </div>
+
+        <!-- 두 번째 셀렉트 박스 -->
+        <div class="form-group">
+            <label for="expend_type">지출구분:</label>
+            <select class="form-control" id="expend_type" name="expend_type" required>
+                <option value="회사공통">회사공통</option>
+                <option value="야근식대">야근식대</option>
+                <option value="교통비_야근">교통비_야근</option>
+                <option value="친목활동">친목활동</option>
+                <option value="교통비_출장/파견">교통비_출장/파견</option>
+                <option value="교육비">교육비</option>
+            </select>
+        </div>
+
+        <!-- 세 번째 셀렉트 박스 -->
+        <div class="form-group">
+            <label for="card_type">카드 종류:</label>
+            <select class="form-control" id="card_type" name="card_type" required>
+                <option value="개인카드">개인카드</option>
+                <option value="법인카드">법인카드</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="excel_date">날짜:</label>
+            <input type="date" class="form-control" id="excel_date" name="excel_date" required>
+        </div>
+        <div class="form-group">
+            <label for="excel_detail">내용:</label>
+            <textarea class="form-control" id="excel_detail" name="excel_detail" rows="2" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="excel_amount">금액:</label>
+            <input type="number" class="form-control" id="excel_amount" name="excel_amount" required>
+        </div>
+
         <div class="form-group">
             <label for="file">파일 선택:</label>
             <input type="file" class="form-control" id="file" name="file" required>

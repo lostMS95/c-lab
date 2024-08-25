@@ -48,6 +48,9 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.7.3'
     implementation 'org.tmatesoft.svnkit:svnkit:1.10.3'
     testImplementation 'junit:junit:4.13.2'
+
+    implementation 'org.apache.poi:poi:5.2.3'
+    implementation 'org.apache.poi:poi-ooxml:5.2.3'
 }
 
 tasks.named('test') {
