@@ -9,10 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.tmatesoft.svn.core.SVNCommitInfo;
 
-import java.io.File;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 @Controller
 public class UserApiController {
@@ -36,15 +33,8 @@ public class UserApiController {
         ModelAndView modelAndView = new ModelAndView("home/home");
 
         try {
-            // 1. 파일을 서버에 저장
-            String filePath = svnService.saveFile(file);
-
-            String formattedDate = excelDate.format(DateTimeFormatter.ofPattern("yyyy년 M월 d일 E요일", Locale.KOREAN));
-
-            // 2. SVN에 파일 업로드
-            File dest = new File(filePath);
-            SVNCommitInfo commitInfo = svnService.uploadToSVN(dest, title, description);
-            svnService.checkoutAndModifyExcel(position, expendType, cardType, formattedDate, excelDetail, excelAmount);
+            // SVN 파일 업로드 및 엑셀 수정 작업 수행
+            SVNCommitInfo commitInfo = svnService.svnUpload(title, description, position, expendType, cardType, excelDate, excelDetail, excelAmount, file);
 
             modelAndView.addObject("message", "파일이 SVN에 성공적으로 업로드되었습니다: " + file.getOriginalFilename());
             modelAndView.addObject("commitInfo", commitInfo);

@@ -20,6 +20,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AESUtil aesUtil;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
@@ -30,7 +33,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         try {
             // 데이터베이스에 저장된 암호화된 비밀번호 복호화
-            String decryptedPassword = AESUtil.decrypt(user.getUserPw());
+            String decryptedPassword = aesUtil.decrypt(user.getUserPw());
 
             // 사용자가 입력한 비밀번호와 복호화된 비밀번호를 비교
             if (!decryptedPassword.equals(password)) {

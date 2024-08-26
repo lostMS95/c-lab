@@ -132,6 +132,7 @@
                 padding: 10px;
             }
         }
+
         .user-info {
             background-color: #f0f8ff;
             padding: 12px 20px;
@@ -150,6 +151,31 @@
             content: '🔒';
             margin-right: 8px;
         }
+
+        /* 로딩 바 스타일 */
+        .loading-bar {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .loading-bar div {
+            width: 10px;
+            height: 10px;
+            margin: 3px;
+            background-color: #007bff;
+            border-radius: 50%;
+            display: inline-block;
+            animation: loading-animation 1.2s infinite ease-in-out both;
+        }
+
+        .loading-bar div:nth-child(1) { animation-delay: -0.24s; }
+        .loading-bar div:nth-child(2) { animation-delay: -0.12s; }
+        .loading-bar div:nth-child(3) { animation-delay: 0; }
+
+        @keyframes loading-animation {
+            0%, 100% { transform: scale(0); }
+            50% { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
@@ -161,7 +187,7 @@
         <p class="user-info">로그인된 사용자: ${pageContext.request.userPrincipal.name}</p>
     </sec:authorize>
 
-    <form action="/svn/upload" method="post" enctype="multipart/form-data">
+    <form action="/svn/upload" method="post" enctype="multipart/form-data" onsubmit="return handleFormSubmit()">
         <div class="form-group">
             <label for="title">업로드 파일명:</label>
             <input type="text" class="form-control" id="title" name="title" required>
@@ -171,7 +197,7 @@
             <textarea class="form-control" id="description" name="description" rows="2"></textarea>
         </div>
 
-        <!-- 첫 번째 셀렉트 박스 -->
+        <!-- 셀렉트 박스들 -->
         <div class="form-group">
             <label for="position">소속:</label>
             <select class="form-control" id="position" name="position" required>
@@ -189,7 +215,6 @@
             </select>
         </div>
 
-        <!-- 두 번째 셀렉트 박스 -->
         <div class="form-group">
             <label for="expend_type">지출구분:</label>
             <select class="form-control" id="expend_type" name="expend_type" required>
@@ -202,7 +227,6 @@
             </select>
         </div>
 
-        <!-- 세 번째 셀렉트 박스 -->
         <div class="form-group">
             <label for="card_type">카드 종류:</label>
             <select class="form-control" id="card_type" name="card_type" required>
@@ -231,6 +255,10 @@
         <button type="submit" class="btn btn-primary">업로드</button>
     </form>
 
+    <div class="loading-bar" id="loadingBar">
+        <div></div><div></div><div></div>
+    </div>
+
     <c:if test="${not empty message}">
         <div class="alert alert-info">
                 ${message}
@@ -240,5 +268,19 @@
 
 <!-- Bootstrap JS (optional for Bootstrap features) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function handleFormSubmit() {
+        // 업로드 확인 메시지
+        const confirmUpload = confirm("파일을 업로드하시겠습니까?");
+        if (!confirmUpload) {
+            return false;
+        }
+
+        // 로딩 바 표시
+        document.getElementById('loadingBar').style.display = 'block';
+        return true;
+    }
+</script>
 </body>
 </html>
