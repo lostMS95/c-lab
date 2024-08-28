@@ -1,5 +1,6 @@
-package com.ms.clab.security;
+package com.ms.clab.config;
 
+import com.ms.clab.security.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

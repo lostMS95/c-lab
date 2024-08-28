@@ -176,6 +176,56 @@
             0%, 100% { transform: scale(0); }
             50% { transform: scale(1); }
         }
+
+        /* 하단 네비게이션 바 스타일 */
+        .navbar-fixed-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 500px;  /* 폼에 맞게 최대 너비 설정 */
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            border-radius: 15px 15px 0 0;  /* 위쪽 모서리 둥글게 */
+        }
+
+        /* 네비게이션 링크 스타일 */
+        .navbar-fixed-bottom .nav-link {
+            color: #007bff;
+            font-weight: 500;
+            text-align: center;
+            padding: 8px 0;
+            flex-grow: 1;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .navbar-fixed-bottom .nav-link:hover {
+            background-color: #f8f9fa;
+            color: #0056b3;
+        }
+
+        /* 모바일 기기용 스타일 */
+        @media (max-width: 768px) {
+            .navbar-fixed-bottom .nav-link {
+                font-size: 12px;
+                padding: 6px 0;
+            }
+        }
+
+        /* PC용 스타일 */
+        @media (min-width: 769px) {
+            .navbar-fixed-bottom .nav-link {
+                font-size: 14px;
+                padding: 8px 0;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -265,6 +315,15 @@
         </div>
     </c:if>
 </div>
+
+<!-- 하단 네비게이션 바 추가 -->
+<nav class="navbar navbar-fixed-bottom">
+    <div class="container-fluid d-flex justify-content-around">
+        <a class="nav-link" href="/mypage">메세지</a>
+        <a class="nav-link" href="/test1">홈</a>
+        <a class="nav-link" href="/test2">마이페이지</a>
+    </div>
+</nav>
 
 <!-- Bootstrap JS (optional for Bootstrap features) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
